@@ -7,8 +7,8 @@ spec:
     storage: 10Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: slow
   local:
     path: /mnt/zp-postgres/db_prod
@@ -28,7 +28,7 @@ metadata:
   namespace: zipline
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: slow
   resources:
     requests:
