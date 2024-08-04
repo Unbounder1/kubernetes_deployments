@@ -41,8 +41,8 @@ spec:
               key: key
         resources:
           requests:
-            memory: "2Gi"
-            cpu: "2000m"
+            memory: "1Gi"
+            cpu: "500m"
           limits:
             memory: "4Gi"
             cpu: "4000m"
@@ -55,13 +55,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: zipline-service
-  namespace: zipline 
+  namespace: zipline
 spec:
-  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
   selector:
     app: zipline
-  ports:
-    - protocol: TCP
-      port: 3000       
-      targetPort: 3000     
-      nodePort: 32000 
+  type: ClusterIP
