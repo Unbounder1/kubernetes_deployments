@@ -1,2 +1,3 @@
 zipline_prod/core_secret.yml
 zipline_prod/network-test.yml
+kubeadm_join
