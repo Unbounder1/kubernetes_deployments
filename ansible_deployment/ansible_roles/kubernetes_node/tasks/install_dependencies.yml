@@ -30,9 +30,6 @@
           state: latest
           update_cache: true
 
-      - name: Install Docker Module for Python
-        pip:
-          name: docker
     when: ansible_os_family == "Debian"
 
   - name: Install cri-o 

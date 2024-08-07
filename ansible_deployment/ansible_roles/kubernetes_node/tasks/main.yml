@@ -10,3 +10,11 @@
 - name: Remove SELINUX 
   selinux:
     state: permissive
+  when: ansible_os_family == "Redhat"
+
+- name: Update apt package cache
+  apt:
+    update_cache: yes
+
+- name: Install Kubernetes
+  import_tasks: install_kubelet.yml
