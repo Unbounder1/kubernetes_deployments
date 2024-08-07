@@ -1,0 +1,34 @@
+# tasks/add_repo.yml
+---
+
+  - name: Add Repo (RHEL)
+    yum_repository:
+      description: Kubernetes
+      baseurl: https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
+      enabled: 1
+      gpgcheck: 1
+      gpgkey: https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
+      exclude: kubelet kubeadm kubectl cri-tools kubernetes-cni
+    when: ansible_os_family == "Redhat"
+
+  - name: Add Repo (DEBIAN)
+    block:
+      - name: Ensure /etc/apt/keyrings directory exists
+        file:
+          path: /etc/apt/keyrings
+          state: directory
+          mode: '0755'
+
+      - name: Download the Kubernetes GPG key
+        get_url:
+          url: https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key
+          dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+          mode: '0644'
+
+      - name: Add Kubernetes apt repository
+        apt_repository:
+          repo: 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /'
+          state: present
+          filename: 'kubernetes.list'
+
+    when: ansible_os_family == "Debian"

@@ -1,0 +1,12 @@
+---
+# tasks file for kubernetes_node
+
+- name: Install dependencies
+  import_tasks: install_dependencies.yml
+
+- name: Add Kubernetes Repo
+  import_tasks: add_repo.yml
+
+- name: Remove SELINUX 
+  selinux:
+    state: permissive
