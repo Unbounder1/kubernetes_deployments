@@ -41,8 +41,8 @@ spec:
               key: key
         resources:
           requests:
-            memory: "1Gi"
-            cpu: "500m"
+            memory: "100Mi"
+            cpu: "100m"
           limits:
             memory: "4Gi"
             cpu: "4000m"
@@ -50,6 +50,15 @@ spec:
       - name: public-share-volume
         persistentVolumeClaim:
           claimName: public-share-claim
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: zipline
+                  operator: In
+                  values:
+                    - "true"
 ---
 apiVersion: v1
 kind: Service

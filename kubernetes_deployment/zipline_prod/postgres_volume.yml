@@ -7,19 +7,19 @@ spec:
     storage: 10Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: slow
-  local:
+  storageClassName: standard
+  hostPath:
     path: /mnt/zp-postgres/db_prod
   nodeAffinity:
     required:
       nodeSelectorTerms:
         - matchExpressions:
-          - key: kubernetes.io/hostname
+          - key: zipline
             operator: In
             values:
-              - minikube
+              - "true"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,8 +28,8 @@ metadata:
   namespace: zipline
 spec:
   accessModes:
-    - ReadWriteMany
-  storageClassName: slow
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
+  storageClassName: standard
