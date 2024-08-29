@@ -3,17 +3,13 @@ kind: Ingress
 metadata:
   name: zipline-ingress
   namespace: zipline
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  rules:
-  - host: zipline.ryan-dong.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: zipline-service
-            port:
-              number: 3000
+  defaultBackend:
+    service:
+      name: zipline-service
+      port:
+        number: 3000
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - ts

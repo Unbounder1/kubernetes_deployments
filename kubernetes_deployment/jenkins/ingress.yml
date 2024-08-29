@@ -6,6 +6,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx  
   rules:
   - host: jenkins.ryan-dong.com
     http:
@@ -14,6 +15,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: latest-jenkins
+            name: jenkins
             port:
               number: 8080
