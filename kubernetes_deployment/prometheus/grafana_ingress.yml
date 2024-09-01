@@ -1,15 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jenkins-ingress
-  namespace: jenkins
+  name: grafana 
+  namespace: prometheus
 spec:
   defaultBackend:
     service:
-      name: jenkins
+      name: grafana
       port:
-        number: 8080
+        number: 80
   ingressClassName: tailscale
   tls:
     - hosts:
-        - jenkins
+        - grafana
