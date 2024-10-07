@@ -1,0 +1,22 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-istio-communication
+  namespace: zipline
+spec:
+  selector: all()
+  types:
+  - Ingress
+  - Egress
+  ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 15017
+  egress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 15017

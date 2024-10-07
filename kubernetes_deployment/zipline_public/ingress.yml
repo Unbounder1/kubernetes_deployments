@@ -1,15 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grafana-ingress
-  namespace: prometheus
+  name: zipline-ingress
+  namespace: zipline-public
 spec:
   defaultBackend:
     service:
-      name: grafana
+      name: zipline-service
       port:
-        number: 80
+        number: 3000
   ingressClassName: tailscale
   tls:
     - hosts:
-        - grafana
+        - ts
