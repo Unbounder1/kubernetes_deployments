@@ -1,0 +1,21 @@
+---
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    mountPath: /config
+    hostPath: /mnt/storage/backups
+    size: 3000Gi
+    accessMode: ReadWriteMany
+    storageClass: standard
+    retain: true
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: storage
+              operator: In
+              values:
+                - true
