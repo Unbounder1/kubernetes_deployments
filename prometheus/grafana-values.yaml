@@ -374,7 +374,7 @@ persistence:
   enabled: true
   storageClassName: nfs-client
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   size: 10Gi
   # annotations: {}
   finalizers:

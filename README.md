@@ -4,7 +4,7 @@ This repository contains Kubernetes manifests for deploying a web server, file s
 
 ## Features
 - **File Server**: NFS-based persistent storage.
-- **Web Server**: Nginx-based deployment with optional ingress.
+- **Web Server**: Nginx-based deployment with tailscale ingress.
 - **Monitoring**: Includes Prometheus and Grafana configurations.
 - **Scaling**: Horizontal Pod Autoscalers configured.
 
