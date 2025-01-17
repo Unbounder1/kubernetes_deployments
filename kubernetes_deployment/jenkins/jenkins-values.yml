@@ -1,0 +1,16 @@
+# controller:
+#   serviceType: ClusterIP
+
+installPlugins:
+  - kubernetes:latest
+  - workflow-aggregator:latest
+  - git:latest
+  - configuration-as-code:latest
+  - credentials-binding:latest
+
+persistence:
+  storageClass: "jenkins-pv"
+
+serviceAccount:
+  create: false
+  name: jenkins

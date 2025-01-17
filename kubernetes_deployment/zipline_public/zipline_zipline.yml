@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zipline-deploy
+  namespace: zipline-public
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zipline
+  template:
+    metadata:
+      labels:
+        app: zipline
+    spec:
+      containers:
+      - name: zipline
+        image: ghcr.io/diced/zipline
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - mountPath: "/zipline/uploads"
+          name: public-share-volume
+        - mountPath: "/zipline/public"
+          name: public-share-volume
+        env:
+        - name: CORE_RETURN_HTTPS
+          value: "false"
+        - name: CORE_HOST
+          value: "0.0.0.0"
+        - name: CORE_PORT
+          value: "3000"
+        - name: CORE_DATABASE_URL
+          value: "postgres://postgres:postgres@postgres-service.zipline.svc.cluster.local/postgres"
+        - name: CORE_LOGGER
+          value: "true"
+        - name: CORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: core-secret
+              key: key
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "4Gi"
+            cpu: "4000m"
+      volumes:
+      - name: public-share-volume
+        persistentVolumeClaim:
+          claimName: public-share-claim
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: zipline
+                  operator: In
+                  values:
+                    - "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipline-service
+  namespace: zipline-public
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: zipline
+  type: ClusterIP
