@@ -5,10 +5,21 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 100.87.166.63-100.87.166.80
+  # - 192.168.1.100-192.168.1.101
+  - 100.87.166.63 - 100.87.166.69
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: default-L2
+  name: l2-test
   namespace: metallb-system
+spec:
+  ipAddressPools:
+  - first-pool
+  nodeSelectors:
+  - matchLabels:
+      kubernetes.io/hostname: minipcserver
+  interfaces:
+  # - enp1s0
+  # - eth0
+  - tailscale0

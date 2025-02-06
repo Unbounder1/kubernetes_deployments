@@ -18,3 +18,14 @@ This repository contains Kubernetes manifests for deploying a web server, file s
     kubectl apply -f file-server/
     kubectl apply -f web-server/
     ```
+
+## Setting up the cluster
+
+`sudo kubeadm init \
+  --image-repository=registry.k8s.io \
+  --pod-network-cidr=10.244.0.0/16 \
+  --service-cidr=10.96.0.0/12 \
+  --control-plane-endpoint=100.113.57.59 \
+  --apiserver-advertise-address=100.113.57.59`
+
+`critcl ps -a` -> get rid of remaining headless processes and stuff so that it doesnt cause api-server to go down during resetup
