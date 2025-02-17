@@ -2,6 +2,12 @@
 
 This repository contains Kubernetes manifests for deploying a web server, file server, and related services. It includes configurations for scaling, networking, and persistent storage.
 
+## TODO
+
+-> switch from tailscale to openvpn tunnel
+-> create subnet for metallb svc advertising
+
+
 ## Features
 - **File Server**: NFS-based persistent storage.
 - **Web Server**: Nginx-based deployment with tailscale ingress.
