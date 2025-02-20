@@ -25,7 +25,7 @@ This repository contains Kubernetes manifests for deploying a web server, file s
     kubectl apply -f web-server/
     ```
 
-## Setting up the cluster
+# Setting up the cluster
 
 `sudo kubeadm init \
   --image-repository=registry.k8s.io \
@@ -35,3 +35,23 @@ This repository contains Kubernetes manifests for deploying a web server, file s
   --apiserver-advertise-address=100.113.57.59`
 
 `critcl ps -a` -> get rid of remaining headless processes and stuff so that it doesnt cause api-server to go down during resetup
+
+## Set up Calico
+
+`helm upgrade calico projectcalico/tigera-operator -values ./active-deploy/configs/calico-values.yaml --namespace tigera-operator`
+
+## Set up Metallb
+
+`kubectl apply -f metallb-native.yaml` && `kubectl apply -f calico-pool.yaml`
+
+## Set up NFS provisioner
+
+`
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+    --set nfs.server=100.96.41.21 \
+    --set nfs.path=/mnt/nfs
+`
+
+(nfs data in /etc/exports)
+
