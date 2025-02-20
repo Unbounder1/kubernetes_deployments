@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-dev-ingress
+  namespace: blog-dev
+spec:
+  defaultBackend:
+    service:
+      name: frontend-dev-svc
+      port:
+        number: 4321
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - frontend-dev

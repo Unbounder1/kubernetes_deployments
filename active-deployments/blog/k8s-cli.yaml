@@ -1,5 +1,15 @@
 # ServiceAccount in the jenkins namespace
 apiVersion: v1
+kind: Namespace
+metadata:
+   name: blog-dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: blog-prod
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: jenkins-robot

@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: docker-registry-ingress
+  namespace: docker-registry
+spec:
+  defaultBackend:
+    service:
+      name: docker-registry
+      port:
+        number: 5000
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - docker-registry-local
