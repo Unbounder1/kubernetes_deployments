@@ -31,18 +31,20 @@ This repository contains Kubernetes manifests for deploying a web server, file s
   --image-repository=registry.k8s.io \
   --pod-network-cidr=10.244.0.0/16 \
   --service-cidr=10.96.0.0/12 \
-  --control-plane-endpoint=100.113.57.59 \
-  --apiserver-advertise-address=100.113.57.59`
+  --control-plane-endpoint=192.168.1.17 \
+  --apiserver-advertise-address=192.168.1.17`
 
 `critcl ps -a` -> get rid of remaining headless processes and stuff so that it doesnt cause api-server to go down during resetup
 
 ## Set up Calico
 
-`helm upgrade calico projectcalico/tigera-operator -values ./active-deploy/configs/calico-values.yaml --namespace tigera-operator`
+```
+helm upgrade calico projectcalico/tigera-operator --values ./configs/calico-values.yaml --namespace tigera-operator --install
+kubectl create ns tigera-operator```
 
 ## Set up Metallb
 
-`kubectl apply -f metallb-native.yaml` && `kubectl apply -f calico-pool.yaml`
+`kubectl apply -f dev-deploy/metallb/metallb-native.yaml && kubectl apply -f dev-deploy/metallb/calico-pool.yaml`
 
 ## Set up NFS provisioner
 
@@ -55,3 +57,25 @@ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs
 
 (nfs data in /etc/exports)
 
+## Tailscale
+
+```
+helm upgrade   --install   tailscale-operator   tailscale/tailscale-operator   --namespace=tailscale   --create-namespace   --set-string oauth.clientId=".env"   --set-string oauth.clientSecret=".env"   --wait
+```
+
+## Set up Jenkins
+
+
+```
+kubectl create ns jenkins
+kubectl apply -f active-deployments/jenkins/jenkins-sa.yaml
+kubectl apply -f active-deployments/jenkins/pv-jenkins.yaml
+helm install jenkins -n jenkins -f configs/jenkins-values.yaml jenkinsci/jenkins
+
+kubectl apply -f active-deployments/jenkins/ingress.yaml
+kubectl create token jenkins-robot -n jenkins  --duration=8760h
+```
+
+TAILSCALE:
+kubectl edit felixconfiguration default
+iptablesMarkMask: 0xff00ff00

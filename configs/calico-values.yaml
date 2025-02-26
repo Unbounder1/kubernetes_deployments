@@ -2,8 +2,11 @@ calicoctl:
   enabled: true
 
 calicoNode:
-  # Enable IP auto-detection method to use the Tailscale interface.
-  autoDetectionMethod: "interface=tailscale0"
+  # envVars:
+  #   - name: FELIX_IPTABLESMARKMASK
+  #     value: "0xff00ff00"
+  # # Enable IP auto-detection method to use the Tailscale interface.
+  # autoDetectionMethod: "interface=tailscale0"
 
   ipv4Pool:
     cidr: "10.244.0.0/16" # Change this to your desired pod network CIDR.
