@@ -79,3 +79,10 @@ kubectl create token jenkins-robot -n jenkins  --duration=8760h
 TAILSCALE:
 kubectl edit felixconfiguration default
 iptablesMarkMask: 0xff00ff00
+
+## Calico BGP
+
+```bash
+
+
+```
