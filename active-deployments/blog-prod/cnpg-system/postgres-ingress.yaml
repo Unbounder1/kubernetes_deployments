@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blog-cnpg-ingress
+  namespace: cnpg-system
+spec:
+  defaultBackend:
+    service:
+      name: blog-prod-database-rw
+      port:
+        number: 5432
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - blog-cnpg
