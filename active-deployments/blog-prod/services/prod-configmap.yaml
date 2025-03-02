@@ -4,9 +4,9 @@ metadata:
   name: astro-blog-env
   namespace: blog-prod
 data:
-  POSTGRES_HOST: blog-prod-database-r.blog-prod.svc.cluster.local
+  POSTGRES_HOST: blog-prod-database-r.cnpg-system.svc.cluster.local
   POSTGRES_PORT: '5432'
-  POSTGRES_USER: postgres
+  POSTGRES_USER: bloguser
   POSTGRES_NAME: blogdigestdb
   POSTGRES_SSLMODE: disable
   BACKEND_PORT: '8080'
