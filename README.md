@@ -4,6 +4,8 @@ This repository contains Kubernetes manifests for deploying a web server, file s
 
 ## TODO
 
+REFRESH SECRETS
+
 -> switch from tailscale to openvpn tunnel
 -> create subnet for metallb svc advertising
 
