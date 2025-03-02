@@ -75,6 +75,8 @@ kubectl apply -f active-deployments/jenkins/pv-jenkins.yaml
 helm install jenkins -n jenkins -f configs/jenkins-values.yaml jenkinsci/jenkins
 
 kubectl apply -f active-deployments/jenkins/ingress.yaml
+
+kubectl apply -f active-deployments/blog-dev/k8s-cli.yaml
 kubectl create token jenkins-robot -n jenkins  --duration=8760h
 ```
 

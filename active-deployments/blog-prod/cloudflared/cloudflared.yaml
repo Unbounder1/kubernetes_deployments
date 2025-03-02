@@ -87,15 +87,19 @@ data:
       ingress:
         # Route traffic for tunnel.example.com to the frontend-dev-svc Kubernetes service
         - hostname: www.ryan-dong.com
-          service: http://frontend-dev-svc.blog-prod.svc.cluster.local:4321
+          service: http://frontend-svc.blog-prod.svc.cluster.local:4321
 
         - hostname: www.ryan-dong.com
           path: /_astro/*
-          service: http://frontend-dev-svc.blog-prod.svc.cluster.local:4321
+          service: http://frontend-svc.blog-prod.svc.cluster.local:4321
 
         - hostname: www.ryan-dong.com
           path: /public/*
-          service: http://frontend-dev-svc.blog-prod.svc.cluster.local:4321
+          service: http://frontend-svc.blog-prod.svc.cluster.local:4321
+        
+        - hostname: www.ryan-dong.com
+          path: /*
+          service: http://frontend-svc.blog-prod.svc.cluster.local:4321
 
 
         # Default rule to catch unmatched traffic and return 404

@@ -10,7 +10,7 @@ data:
   POSTGRES_NAME: blogdigestdb
   POSTGRES_SSLMODE: disable
   BACKEND_PORT: '8080'
-  BACKEND_HOST: gin-backend.blog-prod.svc.cluster.local
+  BACKEND_HOST: backend.blog-prod.svc.cluster.local
   MINIO_USER: minioadmin
   MINIO_PORT: '9000'
   MINIO_HOST: localhost

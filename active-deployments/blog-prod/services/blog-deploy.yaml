@@ -3,22 +3,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-dev
+  name: frontend
   namespace: blog-prod
 spec:
   selector:
     matchLabels:
-      app: frontend-dev
+      app: frontend
   replicas: 1
   template:
     metadata:
       labels:
-        app: frontend-dev
+        app: frontend
     spec:
       containers:
         - name: frontend-astro
           image: docker-registry-local.taild2a7e.ts.net/astro-app
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 4321
           resources:
@@ -37,11 +37,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-dev-svc
+  name: frontend-svc
   namespace: blog-prod
 spec:
   selector:
-    app: frontend-dev
+    app: frontend
   ports:
   - port: 4321
     targetPort: 4321
@@ -51,21 +51,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-dev
+  name: backend
   namespace: blog-prod
 spec:
   selector:
     matchLabels:
-      app: gin-backend
+      app: backend
   template:
     metadata:
       labels:
-        app: gin-backend
+        app: backend
     spec:
       containers:
-      - name: gin-backend
+      - name: backend
         image: docker-registry-local.taild2a7e.ts.net/gin-backend
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
@@ -82,11 +82,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gin-backend
+  name: backend-svc
   namespace: blog-prod
 spec:
   selector:
-    app: gin-backend
+    app: backend
   ports:
   - port: 8080
     targetPort: 8080
