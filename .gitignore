@@ -3,5 +3,5 @@ zipline_prod/network-test.yml
 kubeadm_join
 config.txt
 .env
-active-deployments/blog-prod/cnpg-system/db-secret.yaml
 active-deployments/blog-prod/services/secrets.yaml
+active-deployments/blog-prod/cnpg-system/db-secret.yaml
