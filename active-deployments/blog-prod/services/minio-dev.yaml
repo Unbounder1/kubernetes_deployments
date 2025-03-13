@@ -1,0 +1,63 @@
+# Define a PersistentVolumeClaim (PVC) for MinIO (using NFS provisioner)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: blog-prod
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-client 
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minio
+  namespace: blog-prod
+  labels:
+    app: minio
+spec:
+  containers:
+  - name: minio
+    image: quay.io/minio/minio:latest
+    command:
+    - /bin/bash
+    - -c
+    args: 
+    - minio server /data --console-address :9090
+    volumeMounts:
+    - mountPath: /data
+      name: minio-storage
+  volumes:
+  - name: minio-storage
+    persistentVolumeClaim:
+      claimName: minio-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-svc
+  namespace: blog-prod
+spec:
+  selector:
+    app: minio
+  ports:
+    - port: 9000   # MinIO API Port
+      targetPort: 9000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-ui-svc
+  namespace: blog-prod
+spec:
+  selector:
+    app: minio
+  ports:
+    - port: 9090   # MinIO Console UI
+      targetPort: 9090

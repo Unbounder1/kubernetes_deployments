@@ -9,4 +9,14 @@ spec:
     image: registry.k8s.io/e2e-test-images/agnhost:2.39
     imagePullPolicy: IfNotPresent
   restartPolicy: Always
-
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minio-client
+spec:
+  containers:
+    - name: mc
+      image: minio/mc
+      command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
+  restartPolicy: Never

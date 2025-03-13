@@ -13,7 +13,80 @@ spec:
       owner: bloguser
       secret:
         name: db-secret  # 🔹 Uses the secret for authentication
-
-  storage:
+      postInitApplicationSQLRefs:
+        configMapRefs:
+          - name: db-configmap
+            key: configmap.sql
+  storage:  
     size: 5Gi
     storageClass: nfs-client
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-configmap
+  namespace: cnpg-system
+data:
+  configmap.sql: |
+    -- Ensure commands are run inside blogdigestdb
+      SET search_path TO public;
+
+    -- Create the blog_body table
+    CREATE TABLE blog_body (
+        id SERIAL PRIMARY KEY,
+        blog_id INTEGER NOT NULL UNIQUE,
+        body TEXT NOT NULL
+    );
+
+    -- Create the blog_tags table
+    CREATE TABLE blog_tags (
+        blog_id INTEGER NOT NULL,
+        tag_id INTEGER NOT NULL,
+        PRIMARY KEY (blog_id, tag_id)
+    );
+
+    -- Create the blogdigest table
+    CREATE TABLE blogdigest (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        summary TEXT,
+        thumbnail_url TEXT,
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        slug TEXT UNIQUE
+    );
+
+    -- Create the tags table
+    CREATE TABLE tags (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL UNIQUE
+    );
+
+    -- Foreign Key Constraints
+    ALTER TABLE blog_body
+    ADD CONSTRAINT fk_blog_body_blog_id FOREIGN KEY (blog_id) REFERENCES blogdigest(id) ON DELETE CASCADE;
+
+    ALTER TABLE blog_tags
+    ADD CONSTRAINT fk_blog_tags_blog_id FOREIGN KEY (blog_id) REFERENCES blogdigest(id) ON DELETE CASCADE;
+
+    ALTER TABLE blog_tags
+    ADD CONSTRAINT fk_blog_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE;
+
+    -- Indexes for Performance
+    CREATE INDEX idx_blogdigest_slug ON blogdigest(slug);
+    CREATE INDEX idx_blog_body_blog_id ON blog_body(blog_id);
+    CREATE INDEX idx_blog_tags_blog_id ON blog_tags(blog_id);
+    CREATE INDEX idx_blog_tags_tag_id ON blog_tags(tag_id);
+
+    -- Grant database and schema access to bloguser
+    GRANT CONNECT ON DATABASE blogdigestdb TO bloguser;
+    GRANT USAGE ON SCHEMA public TO bloguser;
+
+    -- Grant full permissions to bloguser for all tables
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE blog_body TO bloguser;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE blog_tags TO bloguser;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE blogdigest TO bloguser;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE tags TO bloguser;
+
+    -- Ensure future tables also inherit these privileges
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO bloguser;
