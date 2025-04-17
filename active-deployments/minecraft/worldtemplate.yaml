@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft-server
+  namespace: minecraft
+  labels:
+    app: minecraft
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate #allow downtime on restart
+    rollingUpdate:
+      maxUnavailable: 1  
+      maxSurge: 0
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server
+          ports:
+            - containerPort: 25565
+          resources:
+            limits:
+              memory: "8Gi"
+              cpu: "2"
+          env:
+          - name: EULA
+            value: "TRUE"
+          - name: TYPE 
+            value: "VANILLA"
+          - name: VERSION
+            value: "LATEST"
+          - name: MOTD
+            value: "Welcome to my Kubernetes Minecraft server!"
+          - name: TYPE
+            value: "VANILLA"
+          - name: DIFFICULTY
+            value: "hard"
+          - name: MODE
+            value: "survival"
+          - name: MAX_PLAYERS
+            value: "20"
+          - name: ALLOW_NETHER
+            value: "true"
+          - name: ENABLE_COMMAND_BLOCK
+            value: "false"
+          - name: SPAWN_ANIMALS
+            value: "true"
+          - name: SPAWN_MONSTERS
+            value: "true"
+          - name: SPAWN_NPCS
+            value: "true"
+          - name: PVP
+            value: "true"
+          - name: ONLINE_MODE
+            value: "true"
+          - name: ENABLE_RCON
+            value: "true"
+          - name: RCON_PASSWORD
+            value: "minecraft123"
+          - name: RCON_PORT
+            value: "25575"
+          - name: USE_AIKAR_FLAGS
+            value: "false"
+
+          # Datapacks
+          - name: DATAPACKS
+            value: ""  # value: "https://example.com/datapack1.zip,https://example.com/datapack2.zip,/datapacks/my-custom-pack"
+          - name: REMOVE_OLD_DATAPACKS
+            value: "true"
+          - name: REMOVE_OLD_DATAPACKS_DEPTH
+            value: "16"
+          - name: REMOVE_OLD_DATAPACKS_INCLUDE
+            value: "*.zip"
+          - name: REMOVE_OLD_DATAPACKS_EXCLUDE
+            value: ""
+
+          # Default Commands
+          - name: RCON_CMDS_STARTUP
+            value: |-
+              op voark
+              op peethescourge
+              # gamerule doFireTick false
+              # pregen start 200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minecraft-service
+  namespace: minecraft
+spec:
+  type: NodePort
+  selector:
+    app: minecraft
+  ports:
+    - port: 25565        
+      targetPort: 25565     
+      nodePort: 32000
