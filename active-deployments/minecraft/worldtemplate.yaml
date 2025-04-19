@@ -35,7 +35,9 @@ spec:
           - name: TYPE 
             value: "VANILLA"
           - name: VERSION
-            value: "LATEST"
+            value: "1.21.5"
+          - name: ENABLE_AUTOPAUSE
+            value: "false"
           - name: MOTD
             value: "Welcome to my Kubernetes Minecraft server!"
           - name: TYPE
@@ -71,21 +73,23 @@ spec:
 
           # Datapacks
           - name: DATAPACKS
-            value: ""  # value: "https://example.com/datapack1.zip,https://example.com/datapack2.zip,/datapacks/my-custom-pack"
-          - name: REMOVE_OLD_DATAPACKS
-            value: "true"
-          - name: REMOVE_OLD_DATAPACKS_DEPTH
-            value: "16"
-          - name: REMOVE_OLD_DATAPACKS_INCLUDE
-            value: "*.zip"
-          - name: REMOVE_OLD_DATAPACKS_EXCLUDE
-            value: ""
+            value: "https://www.dropbox.com/scl/fi/pk0mkkr2dnt6ksnksxqhx/Shared-Life-1.21.3.zip?rlkey=50ogxb0j0p4iqptvdeulpqmcj&st=do7a33ey&dl=1"  # value: "https://example.com/datapack1.zip,https://example.com/datapack2.zip,/datapacks/my-custom-pack"
+          # - name: REMOVE_OLD_DATAPACKS
+          #   value: "true"
+          # - name: REMOVE_OLD_DATAPACKS_DEPTH
+          #   value: "16"
+          # - name: REMOVE_OLD_DATAPACKS_INCLUDE
+          #   value: "*.zip"
+          # - name: REMOVE_OLD_DATAPACKS_EXCLUDE
+          #   value: ""
 
           # Default Commands
           - name: RCON_CMDS_STARTUP
             value: |-
               op voark
               op peethescourge
+              op aiza
+              op peethedestroyer
               # gamerule doFireTick false
               # pregen start 200
 ---
