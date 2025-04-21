@@ -89,7 +89,10 @@ spec:
               op voark
               op peethescourge
               op aiza
-              op peethedestroyer
+              op ineedtowee
+
+              scoreboard objectives add Deaths deathCount
+              scoreboard objectives setdisplay sidebar Deaths
               # gamerule doFireTick false
               # pregen start 200
 ---
