@@ -27,7 +27,7 @@ spec:
             - containerPort: 25565
           resources:
             limits:
-              memory: "8Gi"
+              memory: "12Gi"
               cpu: "2"
           env:
           - name: EULA
@@ -42,6 +42,8 @@ spec:
             value: "Welcome to my Kubernetes Minecraft server!"
           - name: TYPE
             value: "VANILLA"
+          - name: HARDCORE
+            value: "true"
           - name: DIFFICULTY
             value: "hard"
           - name: MODE

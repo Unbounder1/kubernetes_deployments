@@ -6,3 +6,5 @@ config.txt
 active-deployments/blog-prod/cnpg-system/db-secret.yaml
 active-deployments/blog-prod/services/secrets.yaml
 test.cpp
+active-deployments/minecraft/worlds
+active-deployments/minecraft/Dirge of the Sky

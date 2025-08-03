@@ -17,8 +17,8 @@ spec:
         image: unbounder/circuitscan:latest
         resources:
           limits:
-            memory: "10G"
-            cpu: "1"
+            memory: "4G"
+            cpu: "2"
         ports:
         - containerPort: 8001
 ---
