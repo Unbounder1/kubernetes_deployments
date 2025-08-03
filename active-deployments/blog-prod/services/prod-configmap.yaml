@@ -15,4 +15,6 @@ data:
   MINIO_PORT: '9000'
   MINIO_HOST: minio-svc.blog-prod.svc.cluster.local
   MINIO_USE_SSL: "false"
+  CIRCUIT_SCAN_HOST: circuitscan-svc.blog-prod.svc.cluster.local
+  CIRCUIT_SCAN_PORT: '8001'
   
