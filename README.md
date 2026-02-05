@@ -36,7 +36,7 @@ REFRESH SECRETS
   --control-plane-endpoint=192.168.1.17 \
   --apiserver-advertise-address=192.168.1.17`
 
-`critcl ps -a` -> get rid of remaining headless processes and stuff so that it doesnt cause api-server to go down during resetup
+`crictl ps -a` -> get rid of remaining headless processes and stuff so that it doesnt cause api-server to go down during resetup
 
 ## Set up Calico
 
