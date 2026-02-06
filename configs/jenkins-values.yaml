@@ -4,9 +4,20 @@
 installPlugins:
   - kubernetes:latest
   - workflow-aggregator:latest
+  - workflow-job:latest
+  - workflow-cps:latest
+  - pipeline-model-definition:latest
+  - pipeline-model-extensions:latest
+  - pipeline-stage-step:latest
+  - pipeline-milestone-step:latest
+  - pipeline-build-step:latest
+  - pipeline-groovy-lib:latest
   - git:latest
+  - git-client:latest
   - configuration-as-code:latest
+  - credentials:latest
   - credentials-binding:latest
+  - kubernetes-credentials:latest
 
 persistence:
   storageClass: "jenkins-pv"

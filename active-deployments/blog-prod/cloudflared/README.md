@@ -1,3 +1,7 @@
+
+
+cloudflared tunnel create blog-prod
+
 kubectl create secret generic tunnel-credentials -n blog-prod \
 --from-file=credentials.json=/home/rdong/.cloudflared/[ID].json
 

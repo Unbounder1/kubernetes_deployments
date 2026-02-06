@@ -24,7 +24,10 @@ spec:
         # below.
         - --config
         - /etc/cloudflared/config/config.yaml
+        - --protocol
+        - http2
         - run
+        
         livenessProbe:
           httpGet:
             # Cloudflared has a /ready endpoint which returns 200 if and only if
@@ -86,18 +89,18 @@ data:
       # The `ingress` block tells cloudflared which local service to route incoming requests to
       ingress:
         # Route traffic for tunnel.example.com to the frontend-dev-svc Kubernetes service
-        - hostname: www.ryan-dong.com
+        - hostname: ryan-dong.com
           service: http://frontend-svc.blog-prod.svc.cluster.local:4321
 
-        - hostname: www.ryan-dong.com
+        - hostname: ryan-dong.com
           path: /_astro/*
           service: http://frontend-svc.blog-prod.svc.cluster.local:4321
 
-        - hostname: www.ryan-dong.com
+        - hostname: ryan-dong.com
           path: /public/*
           service: http://frontend-svc.blog-prod.svc.cluster.local:4321
         
-        - hostname: www.ryan-dong.com
+        - hostname: ryan-dong.com
           path: /*
           service: http://frontend-svc.blog-prod.svc.cluster.local:4321
 
