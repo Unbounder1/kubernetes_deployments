@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: circuitscan-wsgi
-        image: unbounder/circuitscan:latest
+        image: docker-registry-local.taild2a7e.ts.net/circuit-scan
         resources:
           limits:
             memory: "8G"
